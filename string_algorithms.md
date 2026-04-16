@@ -561,3 +561,171 @@ func AtoiBase(s string, base string) int {
 	}
 	return result
 }
+
+
+## Interactive Factorial
+
+package piscine
+
+func IterativeFactorial(nb int) int {
+	if nb < 0 {
+		return 0
+	}
+
+	number := 1
+
+	maxInt := int(^uint(0) >> 1)
+
+	for i := 2; i <= nb; i++ {
+
+		if number > maxInt/i {
+			return 0
+		}
+		number *= i
+	}
+
+	return number
+}
+
+## Recursive Factorial
+
+package piscine
+
+func RecursiveFactorial(nb int) int {
+	if nb < 0 {
+		return 0
+	}
+
+	if nb > 20 {
+		return 0
+	}
+
+	if nb == 0 {
+		return 1
+	}
+
+	return nb * RecursiveFactorial(nb-1)
+}
+
+
+## Iterative Power
+
+package piscine
+
+func IterativePower(nb int, power int) int {
+	if power < 0 {
+		return 0
+	}
+
+	result := 1
+
+	for i := 1; i <= power; i++ {
+		result *= nb
+	}
+
+	return result
+}
+
+## Recursive Power
+
+package piscine
+
+func RecursivePower(nb int, power int) int {
+	if power < 0 {
+		return 0
+	}
+
+	if power == 0 {
+		return 1
+	}
+
+	return nb * RecursivePower(nb, power-1)
+}
+
+## Fibonacci
+
+package piscine
+
+func Fibonacci(index int) int {
+	if index < 0 {
+		return -1
+	}
+
+	if index == 0 {
+		return 0
+	}
+
+	if index == 1 {
+		return 1
+	}
+
+	return Fibonacci(index-1) + Fibonacci(index-2)
+}
+
+## SQRT
+package piscine
+
+func Sqrt(nb int) int {
+	if nb < 0 {
+		return 0
+	}
+
+	for i := 1; i <= nb/i; i++ {
+		if i*i == nb {
+			return i
+		}
+	}
+
+	return 0
+}
+
+## IsPrime
+
+package piscine
+
+func IsPrime(nb int) bool {
+	if nb <= 1 {
+		return false
+	}
+	for i := 2; i <= nb/i; i++ {
+		if nb%i == 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+## Findnextprime
+
+package piscine
+
+func IsPrimeNum(nb int) bool {
+	if nb <= 1 {
+		return false
+	}
+	for i := 2; i <= nb/i; i++ {
+		if nb%i == 0 {
+			return false
+		}
+	}
+
+	return true
+}
+
+func FindNextPrime(nb int) int {
+	if nb <= 2 {
+		return 2
+	}
+
+	if nb%2 == 0 {
+		nb++
+	}
+
+	for !IsPrimeNum(nb) {
+		nb += 2
+	}
+
+	return nb
+}
+
