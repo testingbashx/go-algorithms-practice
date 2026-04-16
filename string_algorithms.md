@@ -285,3 +285,279 @@ func IsUpper(s string) bool {
 
 	return true
 }
+
+
+Problem 11: ToLower
+🧩 Question
+
+Convert all letters in a string to lowercase.
+
+💡 Simplified Breakdown
+Convert uppercase letters to lowercase
+Leave others unchanged
+
+
+✅ Solution
+
+func ToLower(s string) string {
+	result := ""
+
+	for _, r := range s {
+		if r >= 'A' && r <= 'Z' {
+			r += 32
+		}
+		result += string(r)
+	}
+
+	return result
+}
+
+
+Problem 12: PrintNumbers in Order
+🧩 Question
+
+Write a function that prints the digits of an integer in ascending order.
+
+💡 Simplified Breakdown
+Extract digits from the number
+Store them
+Sort them in ascending order
+Print each digit
+
+✅ Solution
+
+package piscine
+
+import "github.com/01-edu/z01"
+
+func PrintNbr(n int) {
+	if n < 0 {
+		z01.PrintRune('-')
+		if n/10 != 0 {
+			PrintNbr(-(n / 10))
+		}
+		z01.PrintRune(rune('0' + -(n % 10)))
+		return
+	}
+
+	if n >= 10 {
+		PrintNbr(n / 10)
+	}
+	z01.PrintRune(rune('0' + n%10))
+}
+
+
+Problem 13: Trim Atoi
+🧩 Question
+
+Write a function that extracts digits from a string and returns them as an integer.
+
+💡 Simplified Breakdown
+Loop through string
+Collect digits only
+Handle optional - sign before digits
+Build number step by step
+
+✅ Solution
+
+func TrimAtoi(s string) int {
+	result := 0
+	sign := 1
+	found := false
+
+	for _, r := range s {
+		if r == '-' && !found {
+			sign = -1
+		}
+		if r >= '0' && r <= '9' {
+			result = result*10 + int(r-'0')
+			found = true
+		}
+	}
+
+	return result * sign
+}
+
+
+Problem 14: CapitalizeWords
+🧩 Question
+
+Write a function that capitalizes the first letter of each word and lowercases the rest.
+
+💡 Simplified Breakdown
+Detect start of a word
+Uppercase first letter
+Lowercase remaining letters
+Reset when hitting non-alphanumeric characters
+
+✅ Solution
+
+package piscine
+
+func Capitalize(s string) string {
+	runes := []rune(s)
+	newWord := true
+
+	for i, r := range runes {
+		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
+			if newWord {
+				if r >= 'a' && r <= 'z' {
+					runes[i] = r - 32
+				}
+			} else {
+				if r >= 'A' && r <= 'Z' {
+					runes[i] = r + 32
+				}
+			}
+
+			newWord = false
+		} else {
+			newWord = true
+		}
+	}
+
+	return string(runes)
+}
+
+Problem 15: Basic Join
+🧩 Question
+
+Write a function that concatenates all strings in a slice.
+
+💡 Simplified Breakdown
+Loop through slice
+Append each string to result
+
+✅ Solution
+
+
+func BasicJoin(elems []string) string {
+	result := ""
+	for _, s := range elems {
+		result += s
+	}
+	return result
+}
+
+
+Problem 16: Join with Separator
+🧩 Question
+
+Write a function that joins strings with a separator.
+
+💡 Simplified Breakdown
+Start with first element
+Add separator before each next element
+Avoid extra separator at the end
+
+✅ Solution
+
+package piscine
+
+func Join(strs []string, sep string) string {
+	if len(strs) == 0 {
+		return ""
+	}
+
+	result := strs[0]
+
+	for i := 1; i < len(strs); i++ {
+		result = result + sep
+		result = result + strs[i]
+	}
+	return result
+}
+
+
+Problem 17: PrintNumber in Base
+🧩 Question
+
+Write a function that prints an integer in a given base.
+
+💡 Simplified Breakdown
+Validate the base
+Handle negative numbers
+Convert using division and remainder
+Print digits recursively
+
+✅ Solution
+
+func PrintNbrBase(nbr int, base string) {
+	if !isValidBase(base) {
+		z01.PrintRune('N')
+		z01.PrintRune('V')
+		return
+	}
+
+	if nbr < 0 {
+		z01.PrintRune('-')
+	} else {
+		nbr = -nbr
+	}
+
+	printRecursive(nbr, base)
+}
+
+
+Problem 18: Atoi Base
+🧩 Question
+
+Write a function that converts a string in a given base to an integer.
+
+💡 Simplified Breakdown
+Validate base
+For each character:
+Find its value in base
+Multiply result by base length
+Add value
+
+✅ Solution
+
+package piscine
+
+func IsValidBase(base string) bool {
+	if len(base) < 2 {
+		return false
+	}
+
+	for i := 0; i < len(base); i++ {
+		if base[i] == '+' || base[i] == '-' {
+			return false
+		}
+		for j := i + 1; j < len(base); j++ {
+			if base[i] == base[j] {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
+func getIndex(r rune, base string) int {
+	for i, b := range base {
+		if r == b {
+			return i
+		}
+	}
+	return -1
+}
+
+func AtoiBase(s string, base string) int {
+	if !IsValidBase(base) {
+		return 0
+	}
+
+	baseLen := len(base)
+	result := 0
+
+	for _, r := range s {
+		val := getIndex(r, base)
+		if val == -1 {
+			return 0
+		}
+
+		result = result*baseLen + val
+	}
+	return result
+}
